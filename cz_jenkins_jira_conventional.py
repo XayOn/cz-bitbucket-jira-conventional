@@ -41,11 +41,11 @@ class GithubJiraConventionalCz(BaseCommitizen):
             "Please add the key jira_base_url to your .cz.yaml|json|toml config file."
         )
         quit()
-    if "github_repo" not in conf.settings:
-        print("Please add the key github_repo to your .cz.yaml|json|toml config file.")
+    if "bitbucket_repo" not in conf.settings:
+        print("Please add the key bitbucket_repo to your .cz.yaml|json|toml config file.")
         quit()
     jira_base_url = conf.settings["jira_base_url"]
-    github_repo = conf.settings["github_repo"]
+    bitbucket_repo = conf.settings["bitbucket_repo"]
     # if "change_type_map" not in conf.settings:
     change_type_map = {
         "feat": "Feat",
@@ -254,7 +254,7 @@ class GithubJiraConventionalCz(BaseCommitizen):
     def changelog_message_builder_hook(
         self, parsed_message: dict, commit: git.GitCommit
     ) -> dict:
-        """add github and jira links to the readme"""
+        """add bitbucket and jira links to the readme"""
         rev = commit.rev
         m = parsed_message["message"]
         if parsed_message["scope"]:
@@ -266,7 +266,7 @@ class GithubJiraConventionalCz(BaseCommitizen):
             )
         parsed_message[
             "message"
-        ] = f"{m} [{rev[:5]}](https://github.com/{self.github_repo}/commit/{commit.rev})"
+        ] = f"{m} [{rev[:5]}](https://bitbucket.com/{self.bitbucket_repo}/commits/{commit.rev})"
         return parsed_message
 
 
